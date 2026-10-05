@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My To-Do List</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ✓
+            </div>
+
+            <div>
+                <h1>My</h1>
+                <h1>Todo</h1>
+                <h1>List</h1>
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-menu">
+
+            <button class="menu-item active">
+                ✓ &nbsp; Tasks
+            </button>
+
+           <button class="menu-item" onclick="scrollToCalendar()">
+    📅 &nbsp; Calendar
+</button>
+
+        </div>
+
+
+
+    </aside>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <div class="top-header">
+
+            <div>
+
+                <h2>Tasks</h2>
+
+                <p id="currentDate">
+                    Today's tasks
+                </p>
+
+            </div>
+
+
+            <button class="add-main-btn"
+                    onclick="openAddTask()">
+
+                + Add Task
+
+            </button>
+
+        </div>
+
+
+
+        <!-- CATEGORY CARDS -->
+
+        <div class="category-grid">
+
+
+            <div class="category-card health">
+
+                <div class="category-icon">
+                    ❤️
+                </div>
+
+                <div>
+
+                    <strong id="healthCount">
+                        0
+                    </strong>
+
+                    <span>Health</span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="category-card work">
+
+                <div class="category-icon">
+                    🏢
+                </div>
+
+                <div>
+
+                    <strong id="workCount">
+                        0
+                    </strong>
+
+                    <span>Work</span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="category-card study">
+
+                <div class="category-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <strong id="studyCount">
+                        0
+                    </strong>
+
+                    <span>Study</span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="category-card others">
+
+                <div class="category-icon">
+                    
+                </div>
+
+                <div>
+
+                    <strong id="othersCount">
+                        0
+                    </strong>
+
+                    <span>Others</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TASK SECTION -->
+
+        <section class="tasks-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>Today's Tasks</h2>
+
+                    <p id="taskSummary">
+                        0 tasks
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="todoList">
+
+                <!-- Tasks will appear here -->
+
+            </div>
+
+        </section>
+
+
+
+    </main>
+
+
+
+    <!-- CALENDAR -->
+
+    <aside class="calendar-panel" id="calendarSection">
+
+        <div class="calendar-header">
+
+            <div>
+
+                <h2>Calendar</h2>
+
+                <p id="calendarMonth">
+                    Select a date
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="date-picker">
+
+            <label for="selectedDate">
+                Select Date
+            </label>
+
+            <input
+                type="date"
+                id="selectedDate"
+                onchange="filterTasksByDate()"
+            >
+
+        </div>
+
+
+        <div class="calendar-tasks">
+
+            <h3>Tasks for selected date</h3>
+
+            <div id="calendarTaskList">
+
+                <p class="empty-message">
+                    Select a date to view tasks.
+                </p>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+</div>
+
+
+
+<!-- ADD TASK POPUP -->
+
+<div id="taskModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Add New Task</h2>
+
+            <button onclick="closeAddTask()">
+                ×
+            </button>
+
+        </div>
+
+
+        <label>
+            Task Title
+        </label>
+
+        <input
+            type="text"
+            id="title"
+            placeholder="Enter task title"
+        >
+
+
+        <label>
+            Description
+        </label>
+
+        <textarea
+            id="description"
+            placeholder="Enter description"
+        ></textarea>
+
+
+        <label>
+            Category
+        </label>
+
+        <select id="category">
+
+            <option value="Health">
+                Health
+            </option>
+
+            <option value="Work">
+                Work
+            </option>
+
+            <option value="Study">
+                Study
+            </option>
+
+            <option value="Others">
+                Others
+            </option>
+
+        </select>
+
+
+        <label>
+            Due Date
+        </label>
+
+        <input
+            type="date"
+            id="due_date"
+        >
+
+
+        <button
+            class="save-task-btn"
+            onclick="addTodo()"
+        >
+
+            Add Task
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
