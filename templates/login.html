@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Login | My Todo List</title>
+
+    
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f9fc;
+            color: #222;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        /* Login Box */
+
+        .login-container {
+            width: 430px;
+
+            background: white;
+
+            padding: 38px 40px 32px;
+
+            border: 1px solid #e8e8e8;
+            border-radius: 14px;
+
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+
+        /* Application Name */
+
+        .brand {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .brand-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .brand-name span {
+            color: #39b96b;
+        }
+
+
+        /* Welcome Section */
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .welcome-section h1 {
+            margin: 0 0 8px;
+
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .welcome-section p {
+            margin: 0;
+
+            color: #888;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* Divider */
+
+        .divider {
+            display: flex;
+            align-items: center;
+
+            margin: 25px 0;
+
+            color: #999;
+
+            font-size: 11px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+
+            flex: 1;
+
+            height: 1px;
+
+            background: #e5e5e5;
+        }
+
+        .divider span {
+            padding: 0 12px;
+        }
+
+
+        /* Error Message */
+
+        .error {
+            color: #d9534f;
+
+            background: #fff1f1;
+
+            border: 1px solid #ffd6d6;
+
+            padding: 10px 12px;
+
+            border-radius: 7px;
+
+            margin-bottom: 18px;
+
+            font-size: 13px;
+        }
+
+
+        /* Form */
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            color: #333;
+        }
+
+
+        /* Input */
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #dcdcdc;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #45c975;
+
+            box-shadow:
+                0 0 0 3px rgba(69, 201, 117, 0.10);
+        }
+
+        .input-wrapper input::placeholder {
+            color: #aaa;
+        }
+
+
+        /* Password Eye */
+
+        .password-input {
+            padding-right: 45px !important;
+        }
+
+        .password-toggle {
+            position: absolute;
+
+            right: 12px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            color: #888;
+
+            font-size: 15px;
+        }
+
+        .password-toggle:hover {
+            color: #333;
+        }
+
+
+        /* Login Button */
+
+        .login-button {
+            width: 100%;
+
+            padding: 13px;
+
+            margin-top: 8px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: linear-gradient(
+                90deg,
+                #20a95a,
+                #42d477
+            );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .login-button:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 5px 15px rgba(50, 190, 100, 0.25);
+        }
+
+
+        /* Create Account */
+
+        .register-text {
+            text-align: center;
+
+            margin: 23px 0 0;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+        .register-text a {
+            color: #25a95a;
+
+            font-weight: 600;
+
+            text-decoration: none;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Footer */
+
+        .footer-text {
+            text-align: center;
+
+            margin-top: 25px;
+
+            font-size: 11px;
+
+            color: #aaa;
+        }
+
+       /* Google Login Button */
+
+.google-button {
+    width: 100%;
+    padding: 13px;
+
+    margin-top: 12px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 7px;
+
+    background: white;
+    color: #333;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.google-button:hover {
+    background: #f7f7f7;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08);
+}
+        /* Mobile */
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 20px;
+            }
+
+            .login-container {
+                width: 100%;
+
+                padding: 30px 25px;
+            }
+
+            .welcome-section h1 {
+                font-size: 24px;
+            }
+        }
+
+    </style>
+    
+
+    <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+
+ 
+</head>
+
+
+<body>
+
+    <div class="login-container">
+
+
+        <!-- Application Name -->
+
+        <div class="brand">
+
+            <div class="brand-name">
+                My <span>Todo</span> List
+            </div>
+
+        </div>
+
+
+        <!-- Welcome Message -->
+
+        <div class="welcome-section">
+
+            <h1>Welcome back</h1>
+
+            <p>
+                Sign in to your account to continue
+                managing your tasks.
+            </p>
+
+        </div>
+
+
+        <!-- Divider -->
+
+        <div class="divider">
+
+            <span>CONTINUE WITH EMAIL</span>
+
+        </div>
+
+
+        <!-- Error Message -->
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <!-- Login Form -->
+
+        <form method="POST"
+              action="{{ url_for('login') }}">
+
+
+            <!-- Email -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <div class="input-wrapper">
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                        autocomplete="email">
+
+                </div>
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="password-input"
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password">
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword()"
+                        aria-label="Show password">
+
+                        👁
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Login Button -->
+
+            <button
+                type="submit"
+                class="login-button">
+
+                Sign In
+
+            </button>
+
+        </form>
+                <!-- Google Login -->
+
+        <button
+            type="button"
+            class="google-button"
+            onclick="googleLogin()">
+
+            Continue with Google
+
+        </button>
+    
+        <!-- Register -->
+
+        <p class="register-text">
+
+            Don't have an account?
+
+            <a href="{{ url_for('register') }}">
+                Create Account
+            </a>
+
+        </p>
+
+
+        <!-- Footer -->
+
+        <div class="footer-text">
+
+            © 2026 My Todo List
+
+        </div>
+
+
+    </div>
+
+<script>
+
+    const firebaseConfig = {
+  apiKey: "AIzaSyAtann4FLnNighc9czDsdXFJEeOOGJRVbQ",
+  authDomain: "todo-task-manager-d7736.firebaseapp.com",
+  projectId: "todo-task-manager-d7736",
+  storageBucket: "todo-task-manager-d7736.firebasestorage.app",
+  messagingSenderId: "718845511245",
+  appId: "1:718845511245:web:71859cfa02a6dce9443e04",
+  measurementId: "G-M01N8B6NBB"
+};
+
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+
+
+   async function googleLogin() {
+
+    try {
+
+        const provider =
+            new firebase.auth.GoogleAuthProvider();
+
+        const result =
+            await auth.signInWithPopup(provider);
+
+        const user = result.user;
+
+        console.log("Firebase login successful");
+        console.log("Name:", user.displayName);
+        console.log("Email:", user.email);
+
+        const idToken =
+            await user.getIdToken();
+
+        const response =
+            await fetch("/auth/google", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    idToken: idToken
+                })
+            });
+
+        const data =
+            await response.json();
+
+        if (response.ok) {
+
+            window.location.href = "/";
+
+        } else {
+
+            alert(
+                data.error ||
+                "Google login failed."
+            );
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Google login error:",
+            error
+        );
+
+        alert(
+            "Google login failed:\n" +
+            error.message
+        );
+    }
+}
+
+    function togglePassword() {
+
+        const password =
+            document.getElementById("password");
+
+        const button =
+            document.querySelector(".password-toggle");
+
+        if (password.type === "password") {
+
+            password.type = "text";
+            button.textContent = "🙈";
+
+        } else {
+
+            password.type = "password";
+            button.textContent = "👁";
+
+        }
+    }
+
+</script>
+
+ 
+</body>
+
+</html>

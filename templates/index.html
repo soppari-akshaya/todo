@@ -2,235 +2,267 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My To-Do List</title>
+    <title>My Todo List</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 
 <body>
 
 <div class="app">
 
-
-    <!-- SIDEBAR -->
-
-    <aside class="sidebar">
-
-        <div class="logo">
-
-            <div class="logo-icon">
-                ✓
-            </div>
-
-            <div>
-                <h1>My</h1>
-                <h1>Todo</h1>
-                <h1>List</h1>
-            </div>
-
-        </div>
-
-
-        <div class="sidebar-menu">
-
-            <button class="menu-item active">
-                ✓ &nbsp; Tasks
-            </button>
-
-           <button class="menu-item" onclick="scrollToCalendar()">
-    📅 &nbsp; Calendar
-</button>
-
-        </div>
-
-
-
-    </aside>
-
-
-
-    <!-- MAIN CONTENT -->
-
+    <!-- ================= MAIN CONTENT ================= -->
     <main class="main-content">
 
+        <!-- TOP HEADER -->
+        <header class="top-header">
 
-        <!-- HEADER -->
+            <div class="title-section">
+                <h1>My Todo List</h1>
+                <p id="currentDate">Today's tasks</p>
+            </div>
 
-        <div class="top-header">
+            <!-- PROFILE -->
+            <details class="profile-menu">
+
+                <summary>
+                    <div class="profile-avatar">
+                        {{ session["user_name"][0].upper() }}
+                    </div>
+
+                    <div class="profile-info">
+                        <strong>{{ session["user_name"] }}</strong>
+                        <span>{{ session["user_email"] }}</span>
+                    </div>
+
+                    <span class="profile-arrow">⌄</span>
+                </summary>
+
+                <div class="profile-dropdown">
+
+                    <div class="dropdown-user">
+                        <div class="dropdown-avatar">
+                            {{ session["user_name"][0].upper() }}
+                        </div>
+
+                        <div>
+                            <strong>{{ session["user_name"] }}</strong>
+                            <span>{{ session["user_email"] }}</span>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-line"></div>
+
+                    <a href="{{ url_for('logout') }}">
+                        ↪ &nbsp; Logout
+                    </a>
+
+                </div>
+
+            </details>
+
+        </header>
+
+
+        <!-- WELCOME / ADD TASK SECTION -->
+        <section class="welcome-section">
 
             <div>
-
-                <h2>Tasks</h2>
-
-                <p id="currentDate">
-                    Today's tasks
-                </p>
-
+                <h2>Stay productive, {{ session["user_name"] }}!</h2>
+                <p>Organize your day and keep track of your tasks.</p>
             </div>
 
-
-            <button class="add-main-btn"
-                    onclick="openAddTask()">
-
-                + Add Task
-
+            <button class="add-main-btn" onclick="openAddTask()">
+                <span>+</span>
+                Add Task
             </button>
 
-        </div>
+        </section>
 
 
+        <!-- ================= STATISTICS ================= -->
 
-        <!-- CATEGORY CARDS -->
+        <section class="stats-container">
 
-        <div class="category-grid">
-
-
-            <div class="category-card health">
-
-                <div class="category-icon">
-                    ❤️
-                </div>
+            <div class="stat-card">
+                <div class="stat-icon total-icon">○</div>
 
                 <div>
-
-                    <strong id="healthCount">
-                        0
-                    </strong>
-
-                    <span>Health</span>
-
+                    <span>Total Tasks</span>
+                    <strong id="totalTasks">0</strong>
                 </div>
-
             </div>
 
 
-
-            <div class="category-card work">
-
-                <div class="category-icon">
-                    🏢
-                </div>
+            <div class="stat-card">
+                <div class="stat-icon completed-icon">✓</div>
 
                 <div>
-
-                    <strong id="workCount">
-                        0
-                    </strong>
-
-                    <span>Work</span>
-
+                    <span>Completed</span>
+                    <strong id="completedTasks">0</strong>
                 </div>
-
             </div>
 
 
-
-            <div class="category-card study">
-
-                <div class="category-icon">
-                    📚
-                </div>
+            <div class="stat-card">
+                <div class="stat-icon pending-icon">◷</div>
 
                 <div>
-
-                    <strong id="studyCount">
-                        0
-                    </strong>
-
-                    <span>Study</span>
-
+                    <span>Pending</span>
+                    <strong id="pendingTasks">0</strong>
                 </div>
+            </div>
 
+        </section>
+
+
+        <!-- ================= CATEGORY SECTION ================= -->
+
+        <section class="category-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Categories</h2>
+                    <p>Organize your tasks by category</p>
+                </div>
             </div>
 
 
+            <div class="category-grid">
 
-            <div class="category-card others">
+                <!-- HEALTH -->
+                <div class="category-card health-card"
+                     onclick="filterByCategory('Health')">
 
-                <div class="category-icon">
-                    
-                </div>
+                    <div class="category-icon">
+                        ♡
+                    </div>
 
-                <div>
+                    <div class="category-content">
+                        <h3>Health</h3>
+                        <p>Personal & fitness</p>
+                    </div>
 
-                    <strong id="othersCount">
-                        0
-                    </strong>
-
-                    <span>Others</span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- TASK SECTION -->
-
-        <section class="tasks-section">
-
-            <div class="section-title">
-
-                <div>
-
-                    <h2>Today's Tasks</h2>
-
-                    <p id="taskSummary">
-                        0 tasks
-                    </p>
+                    <strong id="healthCount">0</strong>
 
                 </div>
 
-            </div>
+
+                <!-- WORK -->
+                <div class="category-card work-card"
+                     onclick="filterByCategory('Work')">
+
+                    <div class="category-icon">
+                        ▣
+                    </div>
+
+                    <div class="category-content">
+                        <h3>Work</h3>
+                        <p>Professional tasks</p>
+                    </div>
+
+                    <strong id="workCount">0</strong>
+
+                </div>
 
 
-            <div id="todoList">
+                <!-- STUDY -->
+                <div class="category-card study-card"
+                     onclick="filterByCategory('Study')">
 
-                <!-- Tasks will appear here -->
+                    <div class="category-icon">
+                        ✦
+                    </div>
+
+                    <div class="category-content">
+                        <h3>Study</h3>
+                        <p>Learning & education</p>
+                    </div>
+
+                    <strong id="studyCount">0</strong>
+
+                </div>
+
+
+                <!-- OTHERS -->
+                <div class="category-card others-card"
+                     onclick="filterByCategory('Others')">
+
+                    <div class="category-icon">
+                        •••
+                    </div>
+
+                    <div class="category-content">
+                        <h3>Others</h3>
+                        <p>Other activities</p>
+                    </div>
+
+                    <strong id="othersCount">0</strong>
+
+                </div>
 
             </div>
 
         </section>
 
 
+        <!-- ================= TODAY'S TASKS ================= -->
+
+        <section class="tasks-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Today's Tasks</h2>
+                    <p id="todayTaskDescription">
+                        Tasks scheduled for today
+                    </p>
+                </div>
+
+                <button class="clear-filter-btn"
+                        onclick="showAllTodayTasks()">
+                    Show All
+                </button>
+
+            </div>
+
+
+            <div id="taskList" class="task-list">
+
+                <!-- JavaScript adds tasks here -->
+
+            </div>
+
+        </section>
 
     </main>
 
 
+    <!-- ================= RIGHT CALENDAR PANEL ================= -->
 
-    <!-- CALENDAR -->
-
-    <aside class="calendar-panel" id="calendarSection">
+    <aside class="calendar-panel">
 
         <div class="calendar-header">
 
             <div>
-
+                <span class="small-label">YOUR SCHEDULE</span>
                 <h2>Calendar</h2>
+            </div>
 
-                <p id="calendarMonth">
-                    Select a date
-                </p>
-
+            <div class="calendar-symbol">
+                ▦
             </div>
 
         </div>
 
 
-        <div class="date-picker">
+        <div class="calendar-date-box">
 
             <label for="selectedDate">
-                Select Date
+                Select a date
             </label>
 
             <input
@@ -242,116 +274,311 @@
         </div>
 
 
-        <div class="calendar-tasks">
+        <div class="selected-date-title">
 
-            <h3>Tasks for selected date</h3>
+            <span>Tasks for selected date</span>
 
-            <div id="calendarTaskList">
+        </div>
 
-                <p class="empty-message">
-                    Select a date to view tasks.
+
+        <div id="calendarTaskList" class="calendar-task-list">
+
+            <!-- JavaScript adds calendar tasks here -->
+
+        </div>
+
+
+        <div class="calendar-tip">
+
+            <div class="tip-icon">
+                ✓
+            </div>
+
+            <div>
+                <strong>Stay on track</strong>
+                <p>
+                    Select a date to view your scheduled tasks.
                 </p>
-
             </div>
 
         </div>
 
     </aside>
 
-
 </div>
 
 
+<!-- ================= ADD TASK MODAL ================= -->
 
-<!-- ADD TASK POPUP -->
-
-<div id="taskModal" class="modal">
+<div id="addTaskModal" class="modal">
 
     <div class="modal-content">
 
         <div class="modal-header">
 
-            <h2>Add New Task</h2>
+            <div>
+                <span class="modal-label">NEW TASK</span>
+                <h2>Add New Task</h2>
+            </div>
 
-            <button onclick="closeAddTask()">
+            <button class="close-modal"
+                    onclick="closeAddTask()">
                 ×
             </button>
 
         </div>
 
 
-        <label>
-            Task Title
-        </label>
+        <form id="taskForm">
 
-        <input
-            type="text"
-            id="title"
-            placeholder="Enter task title"
-        >
+            <!-- TITLE -->
+            <div class="form-group">
 
+                <label for="taskTitle">
+                    Task Title
+                </label>
 
-        <label>
-            Description
-        </label>
+                <input
+                    type="text"
+                    id="taskTitle"
+                    placeholder="What do you need to do?"
+                    required
+                >
 
-        <textarea
-            id="description"
-            placeholder="Enter description"
-        ></textarea>
+            </div>
 
 
-        <label>
-            Category
-        </label>
+            <!-- DESCRIPTION -->
+            <div class="form-group">
 
-        <select id="category">
+                <label for="taskDescription">
+                    Description
+                </label>
 
-            <option value="Health">
-                Health
-            </option>
+                <textarea
+                    id="taskDescription"
+                    placeholder="Add some details..."
+                    rows="3"
+                ></textarea>
 
-            <option value="Work">
-                Work
-            </option>
-
-            <option value="Study">
-                Study
-            </option>
-
-            <option value="Others">
-                Others
-            </option>
-
-        </select>
+            </div>
 
 
-        <label>
-            Due Date
-        </label>
+            <div class="form-row">
 
-        <input
-            type="date"
-            id="due_date"
-        >
+                <!-- CATEGORY -->
+                <div class="form-group">
+
+                    <label for="taskCategory">
+                        Category
+                    </label>
+
+                    <select id="taskCategory">
+
+                        <option value="Health">
+                            Health
+                        </option>
+
+                        <option value="Work">
+                            Work
+                        </option>
+
+                        <option value="Study">
+                            Study
+                        </option>
+
+                        <option value="Others" selected>
+                            Others
+                        </option>
+
+                    </select>
+
+                </div>
 
 
-        <button
-            class="save-task-btn"
-            onclick="addTodo()"
-        >
+                <!-- DATE -->
+                <div class="form-group">
 
-            Add Task
+                    <label for="taskDueDate">
+                        Due Date
+                    </label>
 
-        </button>
+                    <input
+                        type="date"
+                        id="taskDueDate"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-buttons">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeAddTask()">
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn">
+                    Add Task
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<!-- ================= ADD / EDIT TASK MODAL ================= -->
+
+<div id="addTaskModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <span class="modal-label" id="modalLabel">
+                    NEW TASK
+                </span>
+
+                <h2 id="modalTitle">
+                    Add New Task
+                </h2>
+            </div>
+
+            <button
+                class="close-modal"
+                onclick="closeAddTask()">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="taskForm">
+
+            <!-- TASK TITLE -->
+
+            <div class="form-group">
+
+                <label for="taskTitle">
+                    Task Title
+                </label>
+
+                <input
+                    type="text"
+                    id="taskTitle"
+                    placeholder="What do you need to do?"
+                    required
+                >
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="form-group">
+
+                <label for="taskDescription">
+                    Description
+                </label>
+
+                <textarea
+                    id="taskDescription"
+                    placeholder="Add some details..."
+                    rows="3"
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label for="taskCategory">
+                        Category
+                    </label>
+
+                    <select id="taskCategory">
+
+                        <option value="Health">
+                            Health
+                        </option>
+
+                        <option value="Work">
+                            Work
+                        </option>
+
+                        <option value="Study">
+                            Study
+                        </option>
+
+                        <option value="Others" selected>
+                            Others
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DUE DATE -->
+
+                <div class="form-group">
+
+                    <label for="taskDueDate">
+                        Due Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="taskDueDate"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="modal-buttons">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeAddTask()">
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                    id="saveTaskButton">
+                    Add Task
+                </button>
+
+            </div>
+
+        </form>
 
     </div>
 
 </div>
 
-
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
-
 </html>
